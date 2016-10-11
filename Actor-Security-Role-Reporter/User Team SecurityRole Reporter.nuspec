@@ -2,18 +2,17 @@
 <package >
   <metadata>
     <id>Daggen.Xrm.UserTeamSecurityRoleReport</id>
-    <version>1.2016.10.10</version>
+    <version>1.2016.10.11</version>
     <title>Users, Team and Security Role Report</title>
     <authors>Jonathan Daugaard</authors>
     <owners>Jonathan Daugaard</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <licenseUrl>https://opensource.org/licenses/MS-PL</licenseUrl>
+    <projectUrl>https://github.com/daggen/XrmToolBox-Plugins</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>View User's and Team's Security Roles</description>
     <releaseNotes>1.2016.10.10 First release</releaseNotes>
     <copyright>Copyright 2016</copyright>
-	<tags>     XrmToolBox Plugins User Team SecurityRole Report </tags>
+	<tags>XrmToolBox Plugins User Team SecurityRole Report </tags>
 	<dependencies>
       <dependency id="XrmToolBox" version="1.2016.3.30" />
     </dependencies>

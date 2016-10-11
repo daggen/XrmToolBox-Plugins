@@ -13,7 +13,7 @@ using XrmToolBox.Extensibility.Interfaces;
 
 namespace Daggen.SecurityRole
 {
-    public partial class Controller : PluginControlBase, IPayPalPlugin
+    public partial class Controller : PluginControlBase, IPayPalPlugin, IGitHubPlugin
     {
         private List<Actor> actors = new List<Actor>();
         private IEnumerable<Actor> workingListActors = new List<Actor>();
@@ -358,5 +358,7 @@ namespace Daggen.SecurityRole
         public string DonationDescription => "Donation for User Team and Security Role Xrm Plugin";
 
         public string EmailAccount => "daggen@gmail.com";
+        public string RepositoryName => "XrmToolBox-Plugins";
+        public string UserName => "daggen";
     }
 }

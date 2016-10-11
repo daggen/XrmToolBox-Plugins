@@ -1,0 +1,59 @@
+Username; Security Role; Business Unit; Is Disabled
+Admin Admin;System Administrator;Explorius Education;False
+Admin Admin;Explorius International Manager;Explorius Education;False
+Admin Admin;Explorius Sales Coordinator;Explorius Education;False
+Admin Admin;System Customizer;Explorius Education;False
+Andrea Spickermann;Educatius B2B Sales;Educatius Agent Sales;False
+Andreas Beyer;Educatius Area Manager;Educatius;False
+Anna Tan;Educatius Sales Coordinator;Educatius High School;False
+Carla Kearns;Educatius Area Manager;Educatius;False
+Carla Kearns;Educatius Marketing;Educatius;False
+Carla Kearns;Educatius Sales Coordinator;Educatius;False
+Cherry Li;Educatius Marketing;Educatius;False
+Cherry Li;Explorius International Manager;Educatius;False
+Clara Castellanos;Explorius Sales Coordinator;ISO International;False
+Delegated Admin;System Administrator;Explorius Education;False
+Emelie Mattsson;Explorius Sales Coordinator;ISO International;False
+Emelie Mattsson;ISO Finance Administrator;ISO International;False
+Emma Hansson;Educatius B2B Sales;Educatius Agent Sales China;False
+Evelina Vikholmen;Explorius Sales Coordinator;ISO Sweden;False
+Fausto Vallerini;Explorius Sales Coordinator;Astudy Italy;False
+Gene Lim;Explorius Sales Coordinator;Astudy Korea;False
+Gitte Pontoppidan;Explorius Sales Coordinator;ISO Denmark;False
+Henrik Melin;Explorius International Manager;ISO International;False
+Henrik Melin;Explorius Sales Coordinator;ISO International;False
+Juliana Varela;Educatius B2B Sales;Educatius Agent Sales;False
+Justin Palmer;System Administrator;Explorius Education;False
+Justin Palmer;Mail administrator;Explorius Education;False
+Mari Huhtanen;Explorius Sales Coordinator;ISO Finland;False
+Markus Fiedler;Explorius Sales Coordinator;DFSR Germany;False
+Mikael Magnusson;System Administrator;Explorius Education;False
+Pia Flores;Explorius International Manager;ISO International;False
+Pia Flores;Explorius Sales Coordinator;ISO International;False
+Pia Flores;Educatius Area Manager;ISO International;False
+Pia Flores;System Customizer;ISO International;False
+Richard Lehmann;CEO-Business Manager;Explorius Education;False
+Richard Lehmann;Explorius International Manager;Explorius Education;False
+Richard Lehmann;Sales Manager;Explorius Education;False
+SCCE Australia;Explorius Sales Coordinator;ISO International;False
+Support User;Support User;Explorius Education;False
+Thiago Gomes;Educatius B2B Sales;Educatius Agent Sales;False
+Tomas Simonsson;Educatius B2B Sales Senior;Educatius Agent Sales China;False
+Trine Martinussen;Explorius Sales Coordinator;ISO Norway;False
+watch watch;Explorius Read Only;Explorius Education;False
+Brittany Law;Educatius Sales Coordinator;Educatius University;True
+Gabriel Canellas;Educatius B2B Sales;Educatius Agent Sales;True
+Katherine Choiniere;Educatius Sales Coordinator;Educatius High School;True
+Laura Luo;Educatius Marketing;Educatius;True
+Laura Luo;Explorius International Manager;Educatius;True
+Oksana Barchuk;Educatius Sales Coordinator;Educatius University;True
+Pierre Ermanno;Educatius B2B Manager;Educatius;True
+Pierre Ermanno;Educatius B2B Sales;Educatius;True
+Saara Prokkola;Explorius Sales Coordinator;Explorius Education;True
+Sofie Jay Lindgreen;Explorius Sales Coordinator;Explorius Education;True
+Tatiana Demina;Educatius Sales Coordinator;Educatius High School;True
+Teri Silvestri;Educatius B2B Manager;Educatius;True
+Teri Silvestri;Educatius B2B Sales;Educatius;True
+Test Tester;Explorius Sales Coordinator;ISO International;True
+Zhen Zheng;Educatius Sales Coordinator;Educatius High School;True
+Zhou Shui;Educatius Sales Coordinator;Educatius High School;True

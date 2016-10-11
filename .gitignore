@@ -3,6 +3,10 @@
 *.lo
 *.o
 *.obj
+*.suo
+*.nupkg
+obj/
+bin/
 
 # Precompiled Headers
 *.gch

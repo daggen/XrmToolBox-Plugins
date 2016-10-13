@@ -146,12 +146,6 @@
     <None Include="Resources\WriteLines2.csv" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Acando.CRM.Util\ACS.Util.csproj">
-      <Project>{C5C373F9-50AB-4E6A-8780-6482D0DD6475}</Project>
-      <Name>ACS.Util</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">
       <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
       <VersionMajor>2</VersionMajor>

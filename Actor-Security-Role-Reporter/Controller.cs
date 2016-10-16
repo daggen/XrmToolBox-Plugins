@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,8 +22,8 @@ namespace Daggen.SecurityRole
         private string reportPath = "";
         private int userListViewColumnOrder = -1;
 
-        private const string DataFile = "userRoleData{0}.csv";
-        private const string ReportFile = "UserSecurityRoleReport.xlsx";
+        private const string DataFile = "ActorRoleData{0}.csv";
+        private const string ReportFile = "ActorSecurityRoleReport.xlsx";
 
         public Controller()
         {
@@ -58,15 +59,16 @@ namespace Daggen.SecurityRole
         private List<Model.SecurityRole> GetRoles()
         {
             var qErole = new QueryExpression("role");
-            qErole.ColumnSet.AddColumns("name");
+            qErole.ColumnSet.AddColumns("name", "parentroleid");
 
             return Service.RetrieveMultiple(qErole).Entities
                 .GroupBy(e => e.Attributes["name"].ToString(),
-                    e => e.Id,
+                    e => new {e.Id, IsParent = !e.Contains("parentroleid") },
                     (name, ids) => new Model.SecurityRole
                     {
                         Role = name,
-                        Ids = ids.ToList()
+                        Id = ids.First(l => l.IsParent).Id,
+                        Ids = ids.Select(l => l.Id).ToList()
                     }).ToList();
         }
 
@@ -143,7 +145,7 @@ namespace Daggen.SecurityRole
         private void PopulateListViews()
         {
             SetActorList(actors);
-            SortListView(listViewUsers);
+            SortListView(listViewActors);
 
             SetSecurityRoleList(roles);
             SortListView(listViewSecurityRoles);
@@ -195,12 +197,12 @@ namespace Daggen.SecurityRole
         {
             if (e.Column == userListViewColumnOrder)
             {
-                SortListView(listViewUsers, e.Column, listViewUsers.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending);
+                SortListView(listViewActors, e.Column, listViewActors.Sorting == SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending);
             }
             else
             {
                 userListViewColumnOrder = e.Column;
-                SortListView(listViewUsers, e.Column);
+                SortListView(listViewActors, e.Column);
             }
         }
 
@@ -224,12 +226,12 @@ namespace Daggen.SecurityRole
         {
             if (radioButtonToSecurityRole.Checked)
             {
-                if (listViewUsers.CheckedItems.Count == 0)
+                if (listViewActors.CheckedItems.Count == 0)
                 {
                     MessageBox.Show(Resources.WarningOnEmptySelection);
                     return;
                 }
-                SetSecurityRoleList(listViewUsers.CheckedItems.Cast<ListViewItem>()
+                SetSecurityRoleList(listViewActors.CheckedItems.Cast<ListViewItem>()
                     .Select(item => ((Actor)item.Tag).SecurityRoles)
                     .SelectMany(ls => ls));
             }
@@ -262,13 +264,13 @@ namespace Daggen.SecurityRole
         {
             if (radioButtonToSecurityRole.Checked)
             {
-                if (listViewUsers.CheckedItems.Count == 0)
+                if (listViewActors.CheckedItems.Count == 0)
                 {
                     MessageBox.Show(Resources.WarningOnEmptySelection);
                     return;
                 }
 
-                SetSecurityRoleList(listViewUsers.CheckedItems.Cast<ListViewItem>()
+                SetSecurityRoleList(listViewActors.CheckedItems.Cast<ListViewItem>()
                     .Select(item => ((Actor)item.Tag).SecurityRoles)
                         .Select(l => (IEnumerable<Model.SecurityRole>) l)
                         .Aggregate((w, n) => n.Intersect(w)));
@@ -291,10 +293,10 @@ namespace Daggen.SecurityRole
         private void SetActorList(IEnumerable<Actor> actors)
         {
             workingListActors = actors;
-            listViewUsers.Items.Clear();
+            listViewActors.Items.Clear();
             var toSet = FilterActors(workingListActors).Distinct().ToList();
             textBoxNumberOfActors.Text = toSet.Count.ToString();
-            listViewUsers.Items.AddRange(
+            listViewActors.Items.AddRange(
                     GetUsersAsListViewItems(toSet));
         }
         private void SetSecurityRoleList(IEnumerable<Model.SecurityRole> securityRoles)
@@ -320,19 +322,32 @@ namespace Daggen.SecurityRole
             return actors.ToList();
         }
 
-        private void listViewUsers_SelectedIndexChanged(object sender, EventArgs e)
+        private void listViewUsers_SelectedIndexChanged(object sender, MouseEventArgs e)
         {
-            if (listViewUsers.SelectedItems.Count == 0)
-                return;
+            if (e.Clicks == 1
+                && listViewActors.SelectedItems.Count > 0 
+                && listViewSecurityRoles.CheckedItems.Count == 0)
+                SetSecurityRoleList(((Actor) listViewActors.SelectedItems.Cast<ListViewItem>().Last().Tag).SecurityRoles);
+        }
 
-            SetSecurityRoleList(((Actor) listViewUsers.SelectedItems.Cast<ListViewItem>().Last().Tag).SecurityRoles);
+        private void listViewUsers_DoubleClick(object sender, EventArgs e)
+        {
+            var item = (Actor) ((ListView) sender).SelectedItems.Cast<ListViewItem>().Last().Tag;
+            var type = item.Type == ActorType.User ? "systemuser" : "team";
+            Process.Start(ConnectionDetail.WebApplicationUrl + "/main.aspx?etn=" + type + "&pagetype=entityrecord&id={" + item.Id +"}");
         }
 
         private void listViewSecurityRoles_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listViewSecurityRoles.SelectedItems.Count == 0)
+            if (listViewSecurityRoles.SelectedItems.Count == 0
+                || listViewActors.CheckedItems.Count > 0)
                 return;
             SetActorList(((Model.SecurityRole)listViewSecurityRoles.SelectedItems.Cast<ListViewItem>().Last().Tag).Actors);
+        }
+        private void listViewSecurityRoles_DoubleClick(object sender, EventArgs e)
+        {
+            var item = (Model.SecurityRole)((ListView)sender).SelectedItems.Cast<ListViewItem>().Last().Tag;
+            Process.Start(ConnectionDetail.WebApplicationUrl + "/biz/roles/edit.aspx?id={" + item.Id + "}");
         }
 
         private void checkBoxIncludeFilters_CheckedChanged(object sender, EventArgs e)
@@ -350,15 +365,43 @@ namespace Daggen.SecurityRole
             radioButtonToSecurityRole.Checked = true;
         }
 
-        private void tableLayoutPanel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         public string DonationDescription => "Donation for User Team and Security Role Xrm Plugin";
 
         public string EmailAccount => "daggen@gmail.com";
         public string RepositoryName => "XrmToolBox-Plugins";
         public string UserName => "daggen";
+
+
+        private void linkLabel1_LinkClicked_1(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (var item in listViewActors.Items.Cast<ListViewItem>())
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void linkLabelUncheckAllActors_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (var item in listViewActors.Items.Cast<ListViewItem>())
+            {
+                item.Checked = false;
+            }
+        }
+
+        private void linkLabelCheckAllSecurityRoles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (var item in listViewSecurityRoles.Items.Cast<ListViewItem>())
+            {
+                item.Checked = true;
+            }
+        }
+
+        private void linkLabelUncheckAllSecurityRoles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (var item in listViewSecurityRoles.Items.Cast<ListViewItem>())
+            {
+                item.Checked = false;
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System;
+using System.Windows.Forms;
 using Daggen.SecurityRole.Properties;
 
 namespace Daggen.SecurityRole
@@ -37,7 +38,7 @@ namespace Daggen.SecurityRole
             this.toolStripButtonRetriveData = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonGenerateReport = new System.Windows.Forms.ToolStripButton();
-            this.listViewUsers = new System.Windows.Forms.ListView();
+            this.listViewActors = new System.Windows.Forms.ListView();
             this.Actorname = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.BusinessUnit = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.ColumnActorType = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -58,10 +59,18 @@ namespace Daggen.SecurityRole
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
+            this.linkLabelCheckAllActors = new System.Windows.Forms.LinkLabel();
+            this.linkLabelUncheckAllActors = new System.Windows.Forms.LinkLabel();
+            this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
+            this.linkLabelCheckAllSecurityRoles = new System.Windows.Forms.LinkLabel();
+            this.linkLabelUncheckAllSecurityRoles = new System.Windows.Forms.LinkLabel();
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
+            this.flowLayoutPanel3.SuspendLayout();
+            this.flowLayoutPanel4.SuspendLayout();
             this.SuspendLayout();
             // 
             // toolStrip1
@@ -110,24 +119,25 @@ namespace Daggen.SecurityRole
             this.toolStripButtonGenerateReport.Text = "Generate Report";
             this.toolStripButtonGenerateReport.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
-            // listViewUsers
+            // listViewActors
             // 
-            this.listViewUsers.CheckBoxes = true;
-            this.listViewUsers.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.listViewActors.CheckBoxes = true;
+            this.listViewActors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Actorname,
             this.BusinessUnit,
             this.ColumnActorType,
             this.ColumnDisabled});
-            this.listViewUsers.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewUsers.Location = new System.Drawing.Point(3, 3);
-            this.listViewUsers.Name = "listViewUsers";
-            this.listViewUsers.Size = new System.Drawing.Size(300, 410);
-            this.listViewUsers.TabIndex = 9;
-            this.listViewUsers.UseCompatibleStateImageBehavior = false;
-            this.listViewUsers.View = System.Windows.Forms.View.Details;
-            this.listViewUsers.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewUsers_ColumnClick);
-            this.listViewUsers.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewUsers_ItemChecked);
-            this.listViewUsers.SelectedIndexChanged += new System.EventHandler(this.listViewUsers_SelectedIndexChanged);
+            this.listViewActors.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewActors.Location = new System.Drawing.Point(3, 23);
+            this.listViewActors.Name = "listViewActors";
+            this.listViewActors.Size = new System.Drawing.Size(300, 390);
+            this.listViewActors.TabIndex = 9;
+            this.listViewActors.UseCompatibleStateImageBehavior = false;
+            this.listViewActors.View = System.Windows.Forms.View.Details;
+            this.listViewActors.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewUsers_ColumnClick);
+            this.listViewActors.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewUsers_ItemChecked);
+            listViewActors.MouseClick += new MouseEventHandler(listViewUsers_SelectedIndexChanged);
+            listViewActors.DoubleClick += new EventHandler(listViewUsers_DoubleClick);
             // 
             // Actorname
             // 
@@ -277,20 +287,22 @@ namespace Daggen.SecurityRole
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 120F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.listViewUsers, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.listViewSecurityRoles, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 1);
-            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.listViewActors, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.listViewSecurityRoles, 2, 1);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel2, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel1, 1, 2);
+            this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel3, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.flowLayoutPanel4, 2, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 25);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(733, 466);
             this.tableLayoutPanel1.TabIndex = 14;
-            this.tableLayoutPanel1.Paint += new System.Windows.Forms.PaintEventHandler(this.tableLayoutPanel1_Paint);
             // 
             // listViewSecurityRoles
             // 
@@ -298,15 +310,16 @@ namespace Daggen.SecurityRole
             this.listViewSecurityRoles.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.SecurityRole});
             this.listViewSecurityRoles.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listViewSecurityRoles.Location = new System.Drawing.Point(429, 3);
+            this.listViewSecurityRoles.Location = new System.Drawing.Point(429, 23);
             this.listViewSecurityRoles.Name = "listViewSecurityRoles";
-            this.listViewSecurityRoles.Size = new System.Drawing.Size(301, 410);
+            this.listViewSecurityRoles.Size = new System.Drawing.Size(301, 390);
             this.listViewSecurityRoles.TabIndex = 9;
             this.listViewSecurityRoles.UseCompatibleStateImageBehavior = false;
             this.listViewSecurityRoles.View = System.Windows.Forms.View.Details;
             this.listViewSecurityRoles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSecurityRoles_ColumnClick);
             this.listViewSecurityRoles.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewSecurityRoles_ItemChecked);
-            this.listViewSecurityRoles.SelectedIndexChanged += new System.EventHandler(this.listViewSecurityRoles_SelectedIndexChanged);
+            listViewSecurityRoles.MouseClick += new MouseEventHandler(listViewSecurityRoles_SelectedIndexChanged);
+            listViewSecurityRoles.DoubleClick += new EventHandler(listViewSecurityRoles_DoubleClick);
             // 
             // SecurityRole
             // 
@@ -344,7 +357,7 @@ namespace Daggen.SecurityRole
             this.tableLayoutPanel2.Controls.Add(this.buttonCombine, 0, 1);
             this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfActors, 0, 4);
             this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfSecurityRoles, 1, 4);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(309, 127);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(309, 137);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 5;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
@@ -355,6 +368,68 @@ namespace Daggen.SecurityRole
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Size = new System.Drawing.Size(114, 161);
             this.tableLayoutPanel2.TabIndex = 12;
+            // 
+            // flowLayoutPanel3
+            // 
+            this.flowLayoutPanel3.Controls.Add(this.linkLabelCheckAllActors);
+            this.flowLayoutPanel3.Controls.Add(this.linkLabelUncheckAllActors);
+            this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
+            this.flowLayoutPanel3.Name = "flowLayoutPanel3";
+            this.flowLayoutPanel3.Size = new System.Drawing.Size(200, 14);
+            this.flowLayoutPanel3.TabIndex = 13;
+            // 
+            // linkLabelCheckAllActors
+            // 
+            this.linkLabelCheckAllActors.AutoSize = true;
+            this.linkLabelCheckAllActors.Location = new System.Drawing.Point(3, 0);
+            this.linkLabelCheckAllActors.Name = "linkLabelCheckAllActors";
+            this.linkLabelCheckAllActors.Size = new System.Drawing.Size(52, 13);
+            this.linkLabelCheckAllActors.TabIndex = 0;
+            this.linkLabelCheckAllActors.TabStop = true;
+            this.linkLabelCheckAllActors.Text = "Check All";
+            this.linkLabelCheckAllActors.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked_1);
+            // 
+            // linkLabelUncheckAllActors
+            // 
+            this.linkLabelUncheckAllActors.AutoSize = true;
+            this.linkLabelUncheckAllActors.Location = new System.Drawing.Point(61, 0);
+            this.linkLabelUncheckAllActors.Name = "linkLabelUncheckAllActors";
+            this.linkLabelUncheckAllActors.Size = new System.Drawing.Size(64, 13);
+            this.linkLabelUncheckAllActors.TabIndex = 1;
+            this.linkLabelUncheckAllActors.TabStop = true;
+            this.linkLabelUncheckAllActors.Text = "Uncheck all";
+            this.linkLabelUncheckAllActors.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelUncheckAllActors_LinkClicked);
+            // 
+            // flowLayoutPanel4
+            // 
+            this.flowLayoutPanel4.Controls.Add(this.linkLabelCheckAllSecurityRoles);
+            this.flowLayoutPanel4.Controls.Add(this.linkLabelUncheckAllSecurityRoles);
+            this.flowLayoutPanel4.Location = new System.Drawing.Point(429, 3);
+            this.flowLayoutPanel4.Name = "flowLayoutPanel4";
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(200, 14);
+            this.flowLayoutPanel4.TabIndex = 14;
+            // 
+            // linkLabelCheckAllSecurityRoles
+            // 
+            this.linkLabelCheckAllSecurityRoles.AutoSize = true;
+            this.linkLabelCheckAllSecurityRoles.Location = new System.Drawing.Point(3, 0);
+            this.linkLabelCheckAllSecurityRoles.Name = "linkLabelCheckAllSecurityRoles";
+            this.linkLabelCheckAllSecurityRoles.Size = new System.Drawing.Size(51, 13);
+            this.linkLabelCheckAllSecurityRoles.TabIndex = 0;
+            this.linkLabelCheckAllSecurityRoles.TabStop = true;
+            this.linkLabelCheckAllSecurityRoles.Text = "Check all";
+            this.linkLabelCheckAllSecurityRoles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelCheckAllSecurityRoles_LinkClicked);
+            // 
+            // linkLabelUncheckAllSecurityRoles
+            // 
+            this.linkLabelUncheckAllSecurityRoles.AutoSize = true;
+            this.linkLabelUncheckAllSecurityRoles.Location = new System.Drawing.Point(60, 0);
+            this.linkLabelUncheckAllSecurityRoles.Name = "linkLabelUncheckAllSecurityRoles";
+            this.linkLabelUncheckAllSecurityRoles.Size = new System.Drawing.Size(64, 13);
+            this.linkLabelUncheckAllSecurityRoles.TabIndex = 1;
+            this.linkLabelUncheckAllSecurityRoles.TabStop = true;
+            this.linkLabelUncheckAllSecurityRoles.Text = "Uncheck all";
+            this.linkLabelUncheckAllSecurityRoles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelUncheckAllSecurityRoles_LinkClicked);
             // 
             // Controller
             // 
@@ -373,6 +448,10 @@ namespace Daggen.SecurityRole
             this.flowLayoutPanel2.PerformLayout();
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
+            this.flowLayoutPanel3.ResumeLayout(false);
+            this.flowLayoutPanel3.PerformLayout();
+            this.flowLayoutPanel4.ResumeLayout(false);
+            this.flowLayoutPanel4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,7 +463,7 @@ namespace Daggen.SecurityRole
         private System.Windows.Forms.ToolStripButton toolStripButtonRetriveData;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton toolStripButtonGenerateReport;
-        private System.Windows.Forms.ListView listViewUsers;
+        private System.Windows.Forms.ListView listViewActors;
         private System.Windows.Forms.ColumnHeader Actorname;
         private System.Windows.Forms.ColumnHeader BusinessUnit;
         private System.Windows.Forms.ColumnHeader ColumnActorType;
@@ -405,5 +484,11 @@ namespace Daggen.SecurityRole
         private ColumnHeader SecurityRole;
         private ListView listViewSecurityRoles;
         private TableLayoutPanel tableLayoutPanel2;
+        private FlowLayoutPanel flowLayoutPanel3;
+        private LinkLabel linkLabelUncheckAllActors;
+        private FlowLayoutPanel flowLayoutPanel4;
+        private LinkLabel linkLabelCheckAllSecurityRoles;
+        private LinkLabel linkLabelUncheckAllSecurityRoles;
+        private LinkLabel linkLabelCheckAllActors;
     }
 }

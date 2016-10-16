@@ -7,6 +7,7 @@ namespace Daggen.SecurityRole.Model
     {
         public string Role { get; set; }
         public List<Guid> Ids { get; set; }
+        public Guid Id { get; set; }
 
         public List<Actor> Actors{ get; }
 

@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Daggen.Xrm.UserTeamSecurityRoleReport</id>
-		<version>1.2016.10.16</version>
+		<version>1.2016.10.2301</version>
 		<title>Users, Team and Security Role Report</title>
 		<authors>Jonathan Daugaard</authors>
 		<owners>Jonathan Daugaard</owners>
@@ -11,7 +11,8 @@
 		<iconUrl>http://daggen.se/JD6464.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>View User's and Team's Security Roles and how they related to each other</description>
-		<releaseNotes>1.2016.10.16 Added double click to open User/Team or Security Role.</releaseNotes>
+		<releaseNotes>1.2016.10.2300 Added functionality for adding/removing security roles.\n
+			1.2016.10.16 Added double click to open User/Team or Security Role.</releaseNotes>
 		<copyright>Copyright 2016</copyright>
 		<tags>XrmToolBox Plugins User Team SecurityRole Report </tags>
 		<dependencies>

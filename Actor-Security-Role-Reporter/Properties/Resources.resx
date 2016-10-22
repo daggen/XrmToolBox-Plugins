@@ -136,4 +136,13 @@
   <data name="ActorSecurityRoleReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\ActorSecurityRoleReport.xlsx;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Controller_buttonAddRole_Click_Confirm_Add_Roles_To_Actors" xml:space="preserve">
+    <value>Are you sure you would like to add selected security roles to enabled users/teams?</value>
+  </data>
+  <data name="Controller_buttonRemoveRole_Click_Confirm_Remove_Roles_To_Actors" xml:space="preserve">
+    <value>Are you sure you would like to remove selected security roles from enabled users/teams?</value>
+  </data>
+  <data name="Controller_buttonAddRole_Click_Confirm_Modification" xml:space="preserve">
+    <value>Confirm Modification</value>
+  </data>
 </root>

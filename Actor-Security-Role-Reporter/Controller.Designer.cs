@@ -32,6 +32,7 @@ namespace Daggen.SecurityRole
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Controller));
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonClosePlugin = new System.Windows.Forms.ToolStripButton();
@@ -59,12 +60,19 @@ namespace Daggen.SecurityRole
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.buttonAddRole = new System.Windows.Forms.Button();
+            this.buttonRemoveRole = new System.Windows.Forms.Button();
             this.flowLayoutPanel3 = new System.Windows.Forms.FlowLayoutPanel();
             this.linkLabelCheckAllActors = new System.Windows.Forms.LinkLabel();
             this.linkLabelUncheckAllActors = new System.Windows.Forms.LinkLabel();
+            this.linkLabelShowAllActors = new System.Windows.Forms.LinkLabel();
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.linkLabelCheckAllSecurityRoles = new System.Windows.Forms.LinkLabel();
             this.linkLabelUncheckAllSecurityRoles = new System.Windows.Forms.LinkLabel();
+            this.linkLabelShowAllRoles = new System.Windows.Forms.LinkLabel();
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStrip1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             this.flowLayoutPanel2.SuspendLayout();
@@ -136,8 +144,8 @@ namespace Daggen.SecurityRole
             this.listViewActors.View = System.Windows.Forms.View.Details;
             this.listViewActors.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewUsers_ColumnClick);
             this.listViewActors.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewUsers_ItemChecked);
-            listViewActors.MouseClick += new MouseEventHandler(listViewUsers_SelectedIndexChanged);
-            listViewActors.DoubleClick += new EventHandler(listViewUsers_DoubleClick);
+            this.listViewActors.DoubleClick += new System.EventHandler(this.listViewUsers_DoubleClick);
+            this.listViewActors.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewUsers_SelectedIndexChanged);
             // 
             // Actorname
             // 
@@ -163,9 +171,9 @@ namespace Daggen.SecurityRole
             // 
             this.buttonCombine.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel2.SetColumnSpan(this.buttonCombine, 2);
-            this.buttonCombine.Location = new System.Drawing.Point(9, 37);
+            this.buttonCombine.Location = new System.Drawing.Point(9, 53);
             this.buttonCombine.Name = "buttonCombine";
-            this.buttonCombine.Size = new System.Drawing.Size(96, 22);
+            this.buttonCombine.Size = new System.Drawing.Size(96, 19);
             this.buttonCombine.TabIndex = 1;
             this.buttonCombine.Text = "Combine";
             this.buttonCombine.UseVisualStyleBackColor = true;
@@ -175,9 +183,9 @@ namespace Daggen.SecurityRole
             // 
             this.buttonIntersect.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel2.SetColumnSpan(this.buttonIntersect, 2);
-            this.buttonIntersect.Location = new System.Drawing.Point(9, 69);
+            this.buttonIntersect.Location = new System.Drawing.Point(9, 78);
             this.buttonIntersect.Name = "buttonIntersect";
-            this.buttonIntersect.Size = new System.Drawing.Size(96, 22);
+            this.buttonIntersect.Size = new System.Drawing.Size(96, 19);
             this.buttonIntersect.TabIndex = 1;
             this.buttonIntersect.Text = "Intersect";
             this.buttonIntersect.UseVisualStyleBackColor = true;
@@ -187,9 +195,9 @@ namespace Daggen.SecurityRole
             // 
             this.buttonReset.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.tableLayoutPanel2.SetColumnSpan(this.buttonReset, 2);
-            this.buttonReset.Location = new System.Drawing.Point(9, 101);
+            this.buttonReset.Location = new System.Drawing.Point(9, 103);
             this.buttonReset.Name = "buttonReset";
-            this.buttonReset.Size = new System.Drawing.Size(96, 22);
+            this.buttonReset.Size = new System.Drawing.Size(96, 19);
             this.buttonReset.TabIndex = 1;
             this.buttonReset.Text = "Reset";
             this.buttonReset.UseVisualStyleBackColor = true;
@@ -200,7 +208,7 @@ namespace Daggen.SecurityRole
             this.radioButtonToSecurityRole.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.radioButtonToSecurityRole.AutoSize = true;
             this.radioButtonToSecurityRole.Checked = true;
-            this.radioButtonToSecurityRole.Location = new System.Drawing.Point(67, 7);
+            this.radioButtonToSecurityRole.Location = new System.Drawing.Point(67, 29);
             this.radioButtonToSecurityRole.Name = "radioButtonToSecurityRole";
             this.radioButtonToSecurityRole.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.radioButtonToSecurityRole.Size = new System.Drawing.Size(37, 17);
@@ -213,7 +221,7 @@ namespace Daggen.SecurityRole
             // 
             this.radioButtonToUser.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.radioButtonToUser.AutoSize = true;
-            this.radioButtonToUser.Location = new System.Drawing.Point(10, 7);
+            this.radioButtonToUser.Location = new System.Drawing.Point(10, 29);
             this.radioButtonToUser.Name = "radioButtonToUser";
             this.radioButtonToUser.Size = new System.Drawing.Size(37, 17);
             this.radioButtonToUser.TabIndex = 10;
@@ -261,7 +269,7 @@ namespace Daggen.SecurityRole
             // 
             this.textBoxNumberOfActors.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBoxNumberOfActors.BackColor = System.Drawing.Color.White;
-            this.textBoxNumberOfActors.Location = new System.Drawing.Point(10, 134);
+            this.textBoxNumberOfActors.Location = new System.Drawing.Point(10, 128);
             this.textBoxNumberOfActors.Name = "textBoxNumberOfActors";
             this.textBoxNumberOfActors.ReadOnly = true;
             this.textBoxNumberOfActors.Size = new System.Drawing.Size(37, 20);
@@ -273,7 +281,7 @@ namespace Daggen.SecurityRole
             // 
             this.textBoxNumberOfSecurityRoles.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.textBoxNumberOfSecurityRoles.BackColor = System.Drawing.Color.White;
-            this.textBoxNumberOfSecurityRoles.Location = new System.Drawing.Point(67, 134);
+            this.textBoxNumberOfSecurityRoles.Location = new System.Drawing.Point(67, 128);
             this.textBoxNumberOfSecurityRoles.Name = "textBoxNumberOfSecurityRoles";
             this.textBoxNumberOfSecurityRoles.ReadOnly = true;
             this.textBoxNumberOfSecurityRoles.Size = new System.Drawing.Size(37, 20);
@@ -318,8 +326,8 @@ namespace Daggen.SecurityRole
             this.listViewSecurityRoles.View = System.Windows.Forms.View.Details;
             this.listViewSecurityRoles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSecurityRoles_ColumnClick);
             this.listViewSecurityRoles.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewSecurityRoles_ItemChecked);
-            listViewSecurityRoles.MouseClick += new MouseEventHandler(listViewSecurityRoles_SelectedIndexChanged);
-            listViewSecurityRoles.DoubleClick += new EventHandler(listViewSecurityRoles_DoubleClick);
+            this.listViewSecurityRoles.DoubleClick += new System.EventHandler(this.listViewSecurityRoles_DoubleClick);
+            this.listViewSecurityRoles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewSecurityRoles_SelectedIndexChanged);
             // 
             // SecurityRole
             // 
@@ -350,29 +358,98 @@ namespace Daggen.SecurityRole
             this.tableLayoutPanel2.ColumnCount = 2;
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Controls.Add(this.radioButtonToSecurityRole, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.radioButtonToUser, 0, 0);
-            this.tableLayoutPanel2.Controls.Add(this.buttonReset, 0, 3);
-            this.tableLayoutPanel2.Controls.Add(this.buttonIntersect, 0, 2);
-            this.tableLayoutPanel2.Controls.Add(this.buttonCombine, 0, 1);
-            this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfActors, 0, 4);
-            this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfSecurityRoles, 1, 4);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(309, 137);
+            this.tableLayoutPanel2.Controls.Add(this.radioButtonToSecurityRole, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.radioButtonToUser, 0, 1);
+            this.tableLayoutPanel2.Controls.Add(this.buttonReset, 0, 4);
+            this.tableLayoutPanel2.Controls.Add(this.buttonIntersect, 0, 3);
+            this.tableLayoutPanel2.Controls.Add(this.buttonCombine, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfActors, 0, 5);
+            this.tableLayoutPanel2.Controls.Add(this.textBoxNumberOfSecurityRoles, 1, 5);
+            this.tableLayoutPanel2.Controls.Add(this.textBox1, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.textBox2, 0, 7);
+            this.tableLayoutPanel2.Controls.Add(this.buttonAddRole, 0, 8);
+            this.tableLayoutPanel2.Controls.Add(this.buttonRemoveRole, 0, 9);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(309, 90);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
-            this.tableLayoutPanel2.RowCount = 5;
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 20F));
-            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(114, 161);
+            this.tableLayoutPanel2.RowCount = 10;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.090909F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(114, 255);
             this.tableLayoutPanel2.TabIndex = 12;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tableLayoutPanel2.SetColumnSpan(this.textBox1, 2);
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.Location = new System.Drawing.Point(3, 3);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(108, 13);
+            this.textBox1.TabIndex = 14;
+            this.textBox1.Text = "Filter";
+            this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // textBox2
+            // 
+            this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox2.BackColor = System.Drawing.SystemColors.Control;
+            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tableLayoutPanel2.SetColumnSpan(this.textBox2, 2);
+            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox2.Location = new System.Drawing.Point(3, 178);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(108, 13);
+            this.textBox2.TabIndex = 15;
+            this.textBox2.Text = "Actions";
+            this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // buttonAddRole
+            // 
+            this.buttonAddRole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.SetColumnSpan(this.buttonAddRole, 2);
+            this.buttonAddRole.Location = new System.Drawing.Point(3, 203);
+            this.buttonAddRole.Name = "buttonAddRole";
+            this.buttonAddRole.Size = new System.Drawing.Size(108, 19);
+            this.buttonAddRole.TabIndex = 16;
+            this.buttonAddRole.Text = "Add Roles";
+            this.buttonAddRole.UseVisualStyleBackColor = true;
+            this.buttonAddRole.Click += new System.EventHandler(this.buttonAddRole_Click);
+            // 
+            // buttonRemoveRole
+            // 
+            this.buttonRemoveRole.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tableLayoutPanel2.SetColumnSpan(this.buttonRemoveRole, 2);
+            this.buttonRemoveRole.Location = new System.Drawing.Point(3, 228);
+            this.buttonRemoveRole.Name = "buttonRemoveRole";
+            this.buttonRemoveRole.Size = new System.Drawing.Size(108, 24);
+            this.buttonRemoveRole.TabIndex = 17;
+            this.buttonRemoveRole.Text = "Remove Roles";
+            this.buttonRemoveRole.UseVisualStyleBackColor = true;
+            this.buttonRemoveRole.Click += new System.EventHandler(this.buttonRemoveRole_Click);
             // 
             // flowLayoutPanel3
             // 
             this.flowLayoutPanel3.Controls.Add(this.linkLabelCheckAllActors);
             this.flowLayoutPanel3.Controls.Add(this.linkLabelUncheckAllActors);
+            this.flowLayoutPanel3.Controls.Add(this.linkLabelShowAllActors);
             this.flowLayoutPanel3.Location = new System.Drawing.Point(3, 3);
             this.flowLayoutPanel3.Name = "flowLayoutPanel3";
             this.flowLayoutPanel3.Size = new System.Drawing.Size(200, 14);
@@ -400,10 +477,22 @@ namespace Daggen.SecurityRole
             this.linkLabelUncheckAllActors.Text = "Uncheck all";
             this.linkLabelUncheckAllActors.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelUncheckAllActors_LinkClicked);
             // 
+            // linkLabelShowAllActors
+            // 
+            this.linkLabelShowAllActors.AutoSize = true;
+            this.linkLabelShowAllActors.Location = new System.Drawing.Point(131, 0);
+            this.linkLabelShowAllActors.Name = "linkLabelShowAllActors";
+            this.linkLabelShowAllActors.Size = new System.Drawing.Size(47, 13);
+            this.linkLabelShowAllActors.TabIndex = 1;
+            this.linkLabelShowAllActors.TabStop = true;
+            this.linkLabelShowAllActors.Text = "Show all";
+            this.linkLabelShowAllActors.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAllActors_LinkClicked);
+            // 
             // flowLayoutPanel4
             // 
             this.flowLayoutPanel4.Controls.Add(this.linkLabelCheckAllSecurityRoles);
             this.flowLayoutPanel4.Controls.Add(this.linkLabelUncheckAllSecurityRoles);
+            this.flowLayoutPanel4.Controls.Add(this.linkLabelShowAllRoles);
             this.flowLayoutPanel4.Location = new System.Drawing.Point(429, 3);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
             this.flowLayoutPanel4.Size = new System.Drawing.Size(200, 14);
@@ -430,6 +519,22 @@ namespace Daggen.SecurityRole
             this.linkLabelUncheckAllSecurityRoles.TabStop = true;
             this.linkLabelUncheckAllSecurityRoles.Text = "Uncheck all";
             this.linkLabelUncheckAllSecurityRoles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelUncheckAllSecurityRoles_LinkClicked);
+            // 
+            // linkLabelShowAllRoles
+            // 
+            this.linkLabelShowAllRoles.AutoSize = true;
+            this.linkLabelShowAllRoles.Location = new System.Drawing.Point(130, 0);
+            this.linkLabelShowAllRoles.Name = "linkLabelShowAllRoles";
+            this.linkLabelShowAllRoles.Size = new System.Drawing.Size(47, 13);
+            this.linkLabelShowAllRoles.TabIndex = 1;
+            this.linkLabelShowAllRoles.TabStop = true;
+            this.linkLabelShowAllRoles.Text = "Show all";
+            this.linkLabelShowAllRoles.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAllRoles_LinkClicked);
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
             // Controller
             // 
@@ -490,5 +595,12 @@ namespace Daggen.SecurityRole
         private LinkLabel linkLabelCheckAllSecurityRoles;
         private LinkLabel linkLabelUncheckAllSecurityRoles;
         private LinkLabel linkLabelCheckAllActors;
+        private TextBox textBox1;
+        private TextBox textBox2;
+        private Button buttonAddRole;
+        private Button buttonRemoveRole;
+        private ContextMenuStrip contextMenuStrip1;
+        private LinkLabel linkLabelShowAllActors;
+        private LinkLabel linkLabelShowAllRoles;
     }
 }

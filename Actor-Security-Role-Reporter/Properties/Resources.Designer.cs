@@ -90,6 +90,33 @@ namespace Daggen.SecurityRole.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you would like to add selected security roles to enabled users/teams?.
+        /// </summary>
+        internal static string Controller_buttonAddRole_Click_Confirm_Add_Roles_To_Actors {
+            get {
+                return ResourceManager.GetString("Controller_buttonAddRole_Click_Confirm_Add_Roles_To_Actors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm Modification.
+        /// </summary>
+        internal static string Controller_buttonAddRole_Click_Confirm_Modification {
+            get {
+                return ResourceManager.GetString("Controller_buttonAddRole_Click_Confirm_Modification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you would like to remove selected security roles from enabled users/teams?.
+        /// </summary>
+        internal static string Controller_buttonRemoveRole_Click_Confirm_Remove_Roles_To_Actors {
+            get {
+                return ResourceManager.GetString("Controller_buttonRemoveRole_Click_Confirm_Remove_Roles_To_Actors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report is now saved.
         /// </summary>
         internal static string Controller_toolStripButton1_Click_Report_is_now_saved {

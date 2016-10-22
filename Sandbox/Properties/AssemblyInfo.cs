@@ -1,14 +1,15 @@
 ﻿using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Users, Team and Security Role Report")]
-[assembly: AssemblyDescription("View User's and Team's Security Roles and how they related to each other")]
+[assembly: AssemblyTitle("Sandbox")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Jonathan Daugaard")]
-[assembly: AssemblyProduct("SecurityRole")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("Sandbox")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -19,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("8545557f-40f4-4430-9e73-daefcb178934")]
+[assembly: Guid("9af7d955-47bb-4664-b046-3070a9d5f03f")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -31,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.2016.10.2301")]
-[assembly: AssemblyFileVersion("1.2016.10.2301")]
+[assembly: AssemblyVersion("1.0.0.0")]
+[assembly: AssemblyFileVersion("1.0.0.0")]

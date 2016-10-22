@@ -7,7 +7,8 @@ namespace Daggen.SecurityRole.Model
     {
         public string Name { get; set; }
         public bool IsDisabled { get; set; }
-        public string BusinessUnit { get; set; }
+        public string BusinessUnitName { get; set; }
+        public Guid BusinessUnit { get; set; }
         public Guid Id { get; set; }
         public List<SecurityRole> SecurityRoles { get; }
 
@@ -20,7 +21,7 @@ namespace Daggen.SecurityRole.Model
 
         public override string ToString()
         {
-            return Name + ";" + IsDisabled + ";" + BusinessUnit;
+            return Name + ";" + IsDisabled + ";" + BusinessUnitName;
         }
 
         public override int GetHashCode()

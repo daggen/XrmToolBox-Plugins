@@ -59,16 +59,16 @@ namespace Daggen.SecurityRole
         private List<Model.SecurityRole> GetRoles()
         {
             var qErole = new QueryExpression("role");
-            qErole.ColumnSet.AddColumns("name", "parentroleid");
+            qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid");
 
             return Service.RetrieveMultiple(qErole).Entities
                 .GroupBy(e => e.Attributes["name"].ToString(),
-                    e => new {e.Id, IsParent = !e.Contains("parentroleid") },
+                    e => new {e.Id, IsParent = !e.Contains("parentroleid"), BusinessUnit = (EntityReference) e.Attributes["businessunitid"] },
                     (name, ids) => new Model.SecurityRole
                     {
                         Role = name,
                         Id = ids.First(l => l.IsParent).Id,
-                        Ids = ids.Select(l => l.Id).ToList()
+                        Ids = ids.ToDictionary(l => l.BusinessUnit.Id, l => l.Id)
                     }).ToList();
         }
 
@@ -84,7 +84,8 @@ namespace Daggen.SecurityRole
             {
                 Name = (string)e.Attributes["fullname"],
                 IsDisabled = (bool)e.Attributes["isdisabled"],
-                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Name,
+                BusinessUnitName = ((EntityReference)e.Attributes["businessunitid"]).Name,
+                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Id,
                 Id = e.Id,
                 Type = ActorType.User
             }).ToList();
@@ -93,7 +94,8 @@ namespace Daggen.SecurityRole
             {
                 Name = e.Attributes["name"].ToString(),
                 IsDisabled = false,
-                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Name,
+                BusinessUnitName = ((EntityReference)e.Attributes["businessunitid"]).Name,
+                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Id,
                 Id = e.Id,
                 Type = ActorType.Team
             }));
@@ -123,7 +125,7 @@ namespace Daggen.SecurityRole
                         foreach (var actorInSecurityRole in GetActorsInSecurityRoles())
                         {
                             var actor = actors.First(a => a.Id.Equals(actorInSecurityRole.Actor));
-                            var role = roles.First(r => r.Ids.Contains(actorInSecurityRole.Role));
+                            var role = roles.First(r => r.Ids.Values.Contains(actorInSecurityRole.Role));
                             actor.SecurityRoles.Add(role);
                             role.Actors.Add(actor);
                         }
@@ -159,7 +161,7 @@ namespace Daggen.SecurityRole
                 ImageIndex = 0,
                 StateImageIndex = 0,
                 Tag = user,
-                SubItems = {user.BusinessUnit, user.Type.ToString(), user.IsDisabled ? "Yes": ""}
+                SubItems = {user.BusinessUnitName, user.Type.ToString(), user.IsDisabled ? "Yes": ""}
             }).ToArray();
         }
 
@@ -183,7 +185,7 @@ namespace Daggen.SecurityRole
                 {
                     foreach (var role in actor.SecurityRoles)
                     {
-                        file.WriteLine(string.Join(";", actor.Name, role.Role, actor.BusinessUnit, actor.IsDisabled ? "Disabled" : "Active", actor.Type.ToString()));
+                        file.WriteLine(string.Join(";", actor.Name, role.Role, actor.BusinessUnitName, actor.IsDisabled ? "Disabled" : "Active", actor.Type.ToString()));
                     }
                 }
             }
@@ -402,6 +404,110 @@ namespace Daggen.SecurityRole
             {
                 item.Checked = false;
             }
+        }
+
+        private void buttonAddRole_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(Resources.Controller_buttonAddRole_Click_Confirm_Add_Roles_To_Actors, 
+                Resources.Controller_buttonAddRole_Click_Confirm_Modification, 
+                MessageBoxButtons.OKCancel) == DialogResult.OK)
+                ModifyActorSecurityRoleRelation(Service.Associate);
+        }
+
+        private bool ModifyRelationRoleToActor(Action<string, 
+            Guid, Relationship, EntityReferenceCollection> modifyFunc, Actor actor, Model.SecurityRole role)
+        {
+            var type = actor.Type == ActorType.User ? "systemuser" : "team";
+            var association = actor.Type == ActorType.User ? "systemuserroles_association" : "teamroles_association";
+            try
+            {
+                if (modifyFunc == Service.Associate && actor.SecurityRoles.Contains(role))
+                    return false;
+
+                modifyFunc(type,
+                    actor.Id,
+                    new Relationship(association),
+                    new EntityReferenceCollection() {new EntityReference("role", role.Ids[actor.BusinessUnit])});
+
+                if (modifyFunc == Service.Associate)
+                {
+                    actor.SecurityRoles.Add(role);
+                    role.Actors.Add(actor);
+                }
+                else
+                {
+                    actor.SecurityRoles.Remove(role);
+                    role.Actors.Remove(actor);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        private void buttonRemoveRole_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show(Resources.Controller_buttonRemoveRole_Click_Confirm_Remove_Roles_To_Actors,
+                Resources.Controller_buttonAddRole_Click_Confirm_Modification,
+                MessageBoxButtons.OKCancel) == DialogResult.OK)
+                ModifyActorSecurityRoleRelation(Service.Disassociate);
+        }
+
+        private void ModifyActorSecurityRoleRelation(Action<string, Guid, Relationship, EntityReferenceCollection> relationshipFunc)
+        {
+            WorkAsync(new WorkAsyncInfo
+            {
+                Message = "Modifying roles",
+                Work = (w, e) =>
+                {
+                    int errorCounter = 0;
+                    var selectedActors = listViewActors.CheckedItems.Cast<ListViewItem>().Select(l => (Actor)l.Tag);
+                    var selectedSecurityRoles = listViewSecurityRoles.CheckedItems.Cast<ListViewItem>().Select(l => (Model.SecurityRole)l.Tag);
+                    if (selectedActors.Any() && selectedSecurityRoles.Any())
+                    {
+                        var count = 0;
+                        foreach (var actor in selectedActors)
+                        {
+                            w.ReportProgress((count * 100) / selectedActors.Count(), "Modifying " + actor.Name);
+                            foreach (var role in selectedSecurityRoles)
+                            {
+                                if (actor.IsDisabled || !ModifyRelationRoleToActor(relationshipFunc, actor, role))
+                                    errorCounter++;
+                            }
+                            count++;
+                        }
+                    }
+                    e.Result = errorCounter;
+                    w.ReportProgress(75, "Finishing");
+                },
+                PostWorkCallBack = e =>
+                {
+                    if ((int) e.Result == 0)
+                        MessageBox.Show("Updates are done. No errors.");
+                    else
+                        MessageBox.Show("Their was " + (int) e.Result + " errors.\nPlease reload data and view the results.");
+                },
+                ProgressChanged = e =>
+                {
+                    SetWorkingMessage(e.UserState.ToString());
+                }
+            });
+
+            
+        }
+
+        private void linkLabelShowAllActors_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SetActorList(actors);
+            SortListView(listViewActors);
+        }
+
+        private void linkLabelShowAllRoles_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            SetSecurityRoleList(roles);
+            SortListView(listViewSecurityRoles);
         }
     }
 }

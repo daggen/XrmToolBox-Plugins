@@ -144,8 +144,8 @@ namespace Daggen.SecurityRole
             this.listViewActors.View = System.Windows.Forms.View.Details;
             this.listViewActors.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.ListViewUsers_ColumnClick);
             this.listViewActors.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewUsers_ItemChecked);
+            this.listViewActors.SelectedIndexChanged += new System.EventHandler(this.listViewUsers_SelectedIndexChanged);
             this.listViewActors.DoubleClick += new System.EventHandler(this.listViewUsers_DoubleClick);
-            this.listViewActors.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewUsers_SelectedIndexChanged);
             // 
             // Actorname
             // 
@@ -326,8 +326,8 @@ namespace Daggen.SecurityRole
             this.listViewSecurityRoles.View = System.Windows.Forms.View.Details;
             this.listViewSecurityRoles.ColumnClick += new System.Windows.Forms.ColumnClickEventHandler(this.listViewSecurityRoles_ColumnClick);
             this.listViewSecurityRoles.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewSecurityRoles_ItemChecked);
+            this.listViewSecurityRoles.SelectedIndexChanged += new System.EventHandler(this.listViewSecurityRoles_SelectedIndexChanged);
             this.listViewSecurityRoles.DoubleClick += new System.EventHandler(this.listViewSecurityRoles_DoubleClick);
-            this.listViewSecurityRoles.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listViewSecurityRoles_SelectedIndexChanged);
             // 
             // SecurityRole
             // 

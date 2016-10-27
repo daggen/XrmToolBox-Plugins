@@ -1,0 +1,1 @@
+nuget pack "User Team SecurityRole Reporter.nuspec"

@@ -324,10 +324,9 @@ namespace Daggen.SecurityRole
             return actors.ToList();
         }
 
-        private void listViewUsers_SelectedIndexChanged(object sender, MouseEventArgs e)
+        private void listViewUsers_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (e.Clicks == 1
-                && listViewActors.SelectedItems.Count > 0 
+            if (listViewActors.SelectedItems.Count > 0 
                 && listViewSecurityRoles.CheckedItems.Count == 0)
                 SetSecurityRoleList(((Actor) listViewActors.SelectedItems.Cast<ListViewItem>().Last().Tag).SecurityRoles);
         }
@@ -414,16 +413,22 @@ namespace Daggen.SecurityRole
                 ModifyActorSecurityRoleRelation(Service.Associate);
         }
 
-        private bool ModifyRelationRoleToActor(Action<string, 
+        private ModifyStatus ModifyRelationRoleToActor(Action<string, 
             Guid, Relationship, EntityReferenceCollection> modifyFunc, Actor actor, Model.SecurityRole role)
         {
+            
+            if ((modifyFunc == Service.Associate && actor.SecurityRoles.Contains(role))
+                || (modifyFunc == Service.Disassociate && !actor.SecurityRoles.Contains(role))
+                || actor.IsDisabled)
+                return ModifyStatus.Ignored;
+
+            if (!role.Ids.ContainsKey(actor.BusinessUnit))
+                return ModifyStatus.Ignored;
+
             var type = actor.Type == ActorType.User ? "systemuser" : "team";
             var association = actor.Type == ActorType.User ? "systemuserroles_association" : "teamroles_association";
             try
             {
-                if (modifyFunc == Service.Associate && actor.SecurityRoles.Contains(role))
-                    return false;
-
                 modifyFunc(type,
                     actor.Id,
                     new Relationship(association),
@@ -439,11 +444,11 @@ namespace Daggen.SecurityRole
                     actor.SecurityRoles.Remove(role);
                     role.Actors.Remove(actor);
                 }
-                return true;
+                return ModifyStatus.Success;
             }
             catch (Exception)
             {
-                return false;
+                return ModifyStatus.Failed;
             }
         }
 
@@ -462,9 +467,14 @@ namespace Daggen.SecurityRole
                 Message = "Modifying roles",
                 Work = (w, e) =>
                 {
-                    int errorCounter = 0;
-                    var selectedActors = listViewActors.CheckedItems.Cast<ListViewItem>().Select(l => (Actor)l.Tag);
-                    var selectedSecurityRoles = listViewSecurityRoles.CheckedItems.Cast<ListViewItem>().Select(l => (Model.SecurityRole)l.Tag);
+                    var counter = new Dictionary<ModifyStatus, int>
+                    {
+                        { ModifyStatus.Success, 0},
+                        { ModifyStatus.Failed, 0},
+                        { ModifyStatus.Ignored, 0}
+                    };
+                    var selectedActors = listViewActors.CheckedItems.Cast<ListViewItem>().Select(l => (Actor)l.Tag).ToList();
+                    var selectedSecurityRoles = listViewSecurityRoles.CheckedItems.Cast<ListViewItem>().Select(l => (Model.SecurityRole)l.Tag).ToList();
                     if (selectedActors.Any() && selectedSecurityRoles.Any())
                     {
                         var count = 0;
@@ -473,29 +483,27 @@ namespace Daggen.SecurityRole
                             w.ReportProgress((count * 100) / selectedActors.Count(), "Modifying " + actor.Name);
                             foreach (var role in selectedSecurityRoles)
                             {
-                                if (actor.IsDisabled || !ModifyRelationRoleToActor(relationshipFunc, actor, role))
-                                    errorCounter++;
+                                var res = ModifyRelationRoleToActor(relationshipFunc, actor, role);
+                                counter[res]++;
                             }
                             count++;
                         }
                     }
-                    e.Result = errorCounter;
-                    w.ReportProgress(75, "Finishing");
+                    e.Result = counter;
+                    w.ReportProgress(95, "Finishing");
                 },
                 PostWorkCallBack = e =>
                 {
-                    if ((int) e.Result == 0)
-                        MessageBox.Show("Updates are done. No errors.");
-                    else
-                        MessageBox.Show("Their was " + (int) e.Result + " errors.\nPlease reload data and view the results.");
+                    var counter = (IDictionary<ModifyStatus, int>) e.Result;
+                    MessageBox.Show("Operation finished.\n" +
+                                    "Successfull: " + counter[ModifyStatus.Success] + ", Ignored: " +
+                                    counter[ModifyStatus.Ignored] + " and Failed: " + counter[ModifyStatus.Failed]);
                 },
                 ProgressChanged = e =>
                 {
                     SetWorkingMessage(e.UserState.ToString());
                 }
             });
-
-            
         }
 
         private void linkLabelShowAllActors_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -509,5 +517,10 @@ namespace Daggen.SecurityRole
             SetSecurityRoleList(roles);
             SortListView(listViewSecurityRoles);
         }
+    }
+
+    internal enum ModifyStatus
+    {
+        Success, Failed, Ignored
     }
 }

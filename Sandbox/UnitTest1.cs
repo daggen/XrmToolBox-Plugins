@@ -33,6 +33,22 @@ namespace Sandbox
                         Ids = ids.ToDictionary(l => l.BusinessUnit.Id, l => l.Id)
                     }).ToList();
         }
+
+        [TestMethod]
+        public void TestSomehtingElse()
+        {
+            var counter = new Dictionary<string, int>
+                    {
+                        { "Success", 0},
+                        { "Failed", 0},
+                        { "Ignored", 0}
+                    };
+
+            counter["Success"]++;
+
+            Assert.AreEqual(1, counter["Success"]);
+            Assert.AreEqual(0, counter["Failed"]);
+        }
     }
 
 

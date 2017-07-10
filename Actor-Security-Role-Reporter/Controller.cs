@@ -39,14 +39,14 @@ namespace Daggen.SecurityRole
         {
             var qEsystemuserroles = new QueryExpression("systemuserroles");
             qEsystemuserroles.ColumnSet.AddColumns("roleid", "systemuserid");
-            var list = Service.RetrieveMultiple(qEsystemuserroles).Entities
+            var list = Service.RetrieveAll(qEsystemuserroles).Entities
                 .Select(e => new ActorInRole {
                     Actor = (Guid) e.Attributes["systemuserid"],
                     Role = (Guid) e.Attributes["roleid"]}).ToList();
             
             var qEteamroles = new QueryExpression("teamroles");
             qEteamroles.ColumnSet.AddColumns("roleid", "teamid");
-            list.AddRange(Service.RetrieveMultiple(qEteamroles).Entities
+            list.AddRange(Service.RetrieveAll(qEteamroles).Entities
                 .Select(e => new ActorInRole
                 {
                     Actor = (Guid) e.Attributes["teamid"],
@@ -61,7 +61,7 @@ namespace Daggen.SecurityRole
             var qErole = new QueryExpression("role");
             qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid");
 
-            return Service.RetrieveMultiple(qErole).Entities
+            return Service.RetrieveAll(qErole).Entities
                 .GroupBy(e => e.Attributes["name"].ToString(),
                     e => new {e.Id, IsParent = !e.Contains("parentroleid"), BusinessUnit = (EntityReference) e.Attributes["businessunitid"] },
                     (name, ids) => new Model.SecurityRole
@@ -80,7 +80,7 @@ namespace Daggen.SecurityRole
             qEteam.ColumnSet.AddColumns("name", "businessunitid");
             qEteam.Criteria.AddCondition("teamtype", ConditionOperator.Equal, 0);
 
-            var list = Service.RetrieveMultiple(qEsystemuser).Entities.Select(e => new Actor()
+            var list = Service.RetrieveAll(qEsystemuser).Entities.Select(e => new Actor()
             {
                 Name = (string)e.Attributes["fullname"],
                 IsDisabled = (bool)e.Attributes["isdisabled"],
@@ -90,7 +90,7 @@ namespace Daggen.SecurityRole
                 Type = ActorType.User
             }).ToList();
 
-            list.AddRange(Service.RetrieveMultiple(qEteam).Entities.Select(e => new Actor
+            list.AddRange(Service.RetrieveAll(qEteam).Entities.Select(e => new Actor
             {
                 Name = e.Attributes["name"].ToString(),
                 IsDisabled = false,

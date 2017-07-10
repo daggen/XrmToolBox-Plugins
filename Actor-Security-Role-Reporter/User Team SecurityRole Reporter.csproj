@@ -126,6 +126,7 @@
     <Compile Include="Controller.Designer.cs">
       <DependentUpon>Controller.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrmServiceUtils.cs" />
     <Compile Include="ListViewItemComparer.cs" />
     <Compile Include="Model\ActorInRole.cs" />
     <Compile Include="Model\SecurityRole.cs" />

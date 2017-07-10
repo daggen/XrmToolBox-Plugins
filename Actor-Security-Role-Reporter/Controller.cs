@@ -61,7 +61,22 @@ namespace Daggen.SecurityRole
             var qErole = new QueryExpression("role");
             qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid");
 
-            return Service.RetrieveMultiple(qErole).Entities
+            // Allow for retrieving of more than 5000 entities using paging.
+            qErole.PageInfo = new PagingInfo();
+            int pageNumber = 1;
+            EntityCollection finalCollection = new EntityCollection();
+            EntityCollection results = new EntityCollection();
+            do
+            {
+                qErole.PageInfo.Count = 5000;
+                qErole.PageInfo.PagingCookie = (pageNumber == 1) ? null : results.PagingCookie;
+
+                qErole.PageInfo.PageNumber = pageNumber++;
+                results = Service.RetrieveMultiple(qErole);
+                finalCollection.Entities.AddRange(results.Entities);
+            } while (results.MoreRecords);
+
+            return finalCollection.Entities
                 .GroupBy(e => e.Attributes["name"].ToString(),
                     e => new {e.Id, IsParent = !e.Contains("parentroleid"), BusinessUnit = (EntityReference) e.Attributes["businessunitid"] },
                     (name, ids) => new Model.SecurityRole

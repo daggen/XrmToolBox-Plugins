@@ -2,7 +2,7 @@
 <package >
 	<metadata>
 		<id>Daggen.Xrm.UserTeamSecurityRoleReport</id>
-		<version>1.2017.07.10</version>
+		<version>1.2018.04.06</version>
 		<title>Users, Team and Security Role Report</title>
 		<authors>Jonathan Daugaard</authors>
 		<owners>Jonathan Daugaard</owners>
@@ -11,7 +11,8 @@
 		<iconUrl>http://daggen.se/JD6464.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
 		<description>View User's and Team's Security Roles and how they related to each other</description>
-		<releaseNotes>1.2017.07.10 Fixed Pageing bug. It allows now for more than 5k records.
+		<releaseNotes>1.2018.04.06 Fixed filtering bug for report generation. Now will the checkbox selection apply to the generated report
+			1.2017.07.10 Fixed Pageing bug. It allows now for more than 5k records.
 			1.2016.10.2700 Improved usebility by allowing any form of selection of row and not just mouse clicks. Improved result message when adding/removing roles to include Success, Ignored and Failed.
 			1.2016.10.2300 Added functionality for adding/removing security roles.
 			1.2016.10.16 Added double click to open User/Team or Security Role.</releaseNotes>

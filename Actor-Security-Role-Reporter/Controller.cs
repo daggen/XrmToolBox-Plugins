@@ -181,7 +181,15 @@ namespace Daggen.SecurityRole
                 new StreamWriter(reportPath + "/" + string.Format(DataFile, DateTime.Now.ToString("yyyyMMddHHmmss")), false, Encoding.UTF8))
             {
                 file.WriteLine(string.Join(";", "Name", "Security Role", "Business Unit", "Status", "Type"));
-                foreach (var actor in actors)
+                var actorsToExport = actors;
+                if (!checkBoxIncludeDisabled.Checked)
+                    actorsToExport = actorsToExport.Where(acc => !acc.IsDisabled).ToList();
+                if (!checkBoxIncludeTeams.Checked)
+                    actorsToExport = actorsToExport.Where(act => act.Type != ActorType.Team).ToList();
+                if (!checkBoxIncludeUsers.Checked)
+                    actorsToExport = actorsToExport.Where(act => act.Type != ActorType.User).ToList();
+
+                foreach (var actor in actorsToExport)
                 {
                     foreach (var role in actor.SecurityRoles)
                     {

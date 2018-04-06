@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using System;
+using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
 namespace Daggen.SecurityRole
@@ -22,6 +23,35 @@ namespace Daggen.SecurityRole
             } while (results.MoreRecords);
 
             return finalCollection;
+        }
+
+        public static Entity GetRelatedTo(this IOrganizationService service, Entity from, string attributeName, ColumnSet columnSet)
+        {
+            var reference = from[attributeName] as EntityReference;
+            if (reference == null)
+            {
+                throw new ArgumentException("attributeName must be of type Lookup");
+            }
+
+            return service.Retrieve(reference.LogicalName, reference.Id, columnSet);
+        }
+
+        public static T GetAttributeOrDefualt<T>(this Entity entity, string attributeName, T defaultValue)
+        {
+            object value;
+            if (entity.Attributes.TryGetValue(attributeName, out value))
+            {
+                return (T) value;
+            }
+            else
+            {
+                return defaultValue;
+            }
+        }
+
+        public static Entity Retrieve(this IOrganizationService service, EntityReference entityReference, ColumnSet columnSet)
+        {
+            return service.Retrieve(entityReference.LogicalName, entityReference.Id, columnSet);
         }
     }
 }

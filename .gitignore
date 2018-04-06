@@ -8,6 +8,7 @@
 obj/
 bin/
 packages/
+User And Business Unit Mover/
 
 # Precompiled Headers
 *.gch

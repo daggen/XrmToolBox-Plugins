@@ -6,6 +6,7 @@
 *.suo
 *.nupkg
 obj/
+.vs/
 bin/
 packages/
 User And Business Unit Mover/
@@ -18,6 +19,7 @@ User And Business Unit Mover/
 *.so
 *.dylib
 *.dll
+~*
 
 # Fortran module files
 *.mod

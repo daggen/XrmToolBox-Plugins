@@ -41,16 +41,16 @@ namespace Daggen.SecurityRole
             qEsystemuserroles.ColumnSet.AddColumns("roleid", "systemuserid");
             var list = Service.RetrieveAll(qEsystemuserroles).Entities
                 .Select(e => new ActorInRole {
-                    Actor = (Guid) e.Attributes["systemuserid"],
-                    Role = (Guid) e.Attributes["roleid"]}).ToList();
+                    Actor = e.GetAttributeValue<Guid>("systemuserid"),
+                    Role = e.GetAttributeValue<Guid>("roleid")}).ToList();
             
             var qEteamroles = new QueryExpression("teamroles");
             qEteamroles.ColumnSet.AddColumns("roleid", "teamid");
             list.AddRange(Service.RetrieveAll(qEteamroles).Entities
                 .Select(e => new ActorInRole
                 {
-                    Actor = (Guid) e.Attributes["teamid"],
-                    Role = (Guid) e.Attributes["roleid"]
+                    Actor = e.GetAttributeValue<Guid>("teamid"),
+                    Role = e.GetAttributeValue<Guid>("roleid")
                 }));
 
             return list;
@@ -59,43 +59,45 @@ namespace Daggen.SecurityRole
         private List<Model.SecurityRole> GetRoles()
         {
             var qErole = new QueryExpression("role");
-            qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid");
+            qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid", "parentrootroleid");
 
             return Service.RetrieveAll(qErole).Entities
-                .GroupBy(e => e.Attributes["name"].ToString(),
-                    e => new {e.Id, IsParent = !e.Contains("parentroleid"), BusinessUnit = (EntityReference) e.Attributes["businessunitid"] },
-                    (name, ids) => new Model.SecurityRole
-                    {
-                        Role = name,
-                        Id = ids.First(l => l.IsParent).Id,
-                        Ids = ids.ToDictionary(l => l.BusinessUnit.Id, l => l.Id)
-                    }).ToList();
+                .GroupBy(e => e.GetAttributeValue<string>("parentrootroleid"))
+                .Select(role => new Model.SecurityRole {
+                        Role = role.First(x => !x.Contains("parentroleid"))
+                            .GetAttributeValue<string>("name"),
+                        Id = role.First(x => !x.Contains("parentroleid"))
+                            .Id,
+                        Ids = role.ToDictionary(l => l.GetAttributeValue<Entity>("businessunitid").Id,
+                            l => l.Id)
+                }).ToList();
         }
 
         private List<Actor> GetActors()
         {
             var qEsystemuser = new QueryExpression("systemuser");
             qEsystemuser.ColumnSet.AddColumns("systemuserid", "businessunitid", "fullname", "isdisabled");
-            var qEteam = new QueryExpression("team");
-            qEteam.ColumnSet.AddColumns("name", "businessunitid");
-            qEteam.Criteria.AddCondition("teamtype", ConditionOperator.Equal, 0);
+           
 
             var list = Service.RetrieveAll(qEsystemuser).Entities.Select(e => new Actor()
             {
-                Name = (string)e.Attributes["fullname"],
-                IsDisabled = (bool)e.Attributes["isdisabled"],
-                BusinessUnitName = ((EntityReference)e.Attributes["businessunitid"]).Name,
-                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Id,
+                Name = e.GetAttributeValue<string>("fullname"),
+                IsDisabled = e.GetAttributeValue<bool>("isdisabled"),
+                BusinessUnitName = e.GetAttributeValue<EntityReference>("businessunitid").Name,
+                BusinessUnit = e.GetAttributeValue<EntityReference>("businessunitid").Id,
                 Id = e.Id,
                 Type = ActorType.User
             }).ToList();
 
+            var qEteam = new QueryExpression("team");
+            qEteam.ColumnSet.AddColumns("name", "businessunitid");
+            qEteam.Criteria.AddCondition("teamtype", ConditionOperator.Equal, 0);
             list.AddRange(Service.RetrieveAll(qEteam).Entities.Select(e => new Actor
             {
-                Name = e.Attributes["name"].ToString(),
+                Name = e.GetAttributeValue<string>("name"),
                 IsDisabled = false,
-                BusinessUnitName = ((EntityReference)e.Attributes["businessunitid"]).Name,
-                BusinessUnit = ((EntityReference)e.Attributes["businessunitid"]).Id,
+                BusinessUnitName = e.GetAttributeValue<EntityReference>("businessunitid").Name,
+                BusinessUnit = e.GetAttributeValue<EntityReference>("businessunitid").Id,
                 Id = e.Id,
                 Type = ActorType.Team
             }));

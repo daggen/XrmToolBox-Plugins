@@ -112,12 +112,18 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CrmConnector.cs" />
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj">
+      <Project>{8545557F-40F4-4430-9E73-DAEFCB178934}</Project>
+      <Name>User Team SecurityRole Reporter</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

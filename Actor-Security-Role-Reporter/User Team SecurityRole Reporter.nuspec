@@ -2,16 +2,17 @@
 <package >
 	<metadata>
 		<id>Daggen.Xrm.UserTeamSecurityRoleReport</id>
-		<version>1.2018.04.06</version>
+		<version>1.2019.03.19</version>
 		<title>Users, Team and Security Role Report</title>
 		<authors>Jonathan Daugaard</authors>
 		<owners>Jonathan Daugaard</owners>
-		<licenseUrl>https://opensource.org/licenses/MS-PL</licenseUrl>
+		<license type="expression">MS-PL</license>
 		<projectUrl>https://github.com/daggen/XrmToolBox-Plugins</projectUrl>
 		<iconUrl>http://daggen.se/JD6464.png</iconUrl>
 		<requireLicenseAcceptance>false</requireLicenseAcceptance>
-		<description>View User's and Team's Security Roles and how they related to each other</description>
-		<releaseNotes>1.2018.04.06 Fixed filtering bug for report generation. Now will the checkbox selection apply to the generated report
+		<description>View User's and Team's Security Roles and how they related to each other. Also possible to bulk update!</description>
+		<releaseNotes>1.2019.03.19 Fixed bug when Security Role name didn't match between business units. This can happen when renaming the OOTB roles in your solution.
+			1.2018.04.06 Fixed filtering bug for report generation. Now will the checkbox selection apply to the generated report
 			1.2017.07.10 Fixed Pageing bug. It allows now for more than 5k records.
 			1.2016.10.2700 Improved usebility by allowing any form of selection of row and not just mouse clicks. Improved result message when adding/removing roles to include Success, Ignored and Failed.
 			1.2016.10.2300 Added functionality for adding/removing security roles.
@@ -23,6 +24,6 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="\bin\Release\UserTeamSecurityRoleReporter.dll" target="lib\net452\Plugins" />
+		<file src="bin\Release\UserTeamSecurityRoleReporter.dll" target="lib\net452\Plugins" />
 	</files>
 </package>

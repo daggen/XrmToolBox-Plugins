@@ -21,6 +21,7 @@ namespace Daggen.SecurityRole
         private List<Model.SecurityRole> roles = new List<Model.SecurityRole>();
         private string reportPath = "";
         private int userListViewColumnOrder = -1;
+        private readonly ReportService reportService = new ReportService();
 
         private const string DataFile = "ActorRoleData{0}.csv";
         private const string ReportFile = "ActorSecurityRoleReport.xlsx";
@@ -28,82 +29,14 @@ namespace Daggen.SecurityRole
         public Controller()
         {
             InitializeComponent();
+            reportService.ServiceFunc = () => Service;
         }
 
         private void Controller_Load(object sender, EventArgs e)
         {
 
         }
-
-        private IEnumerable<ActorInRole> GetActorsInSecurityRoles()
-        {
-            var qEsystemuserroles = new QueryExpression("systemuserroles");
-            qEsystemuserroles.ColumnSet.AddColumns("roleid", "systemuserid");
-            var list = Service.RetrieveAll(qEsystemuserroles).Entities
-                .Select(e => new ActorInRole {
-                    Actor = e.GetAttributeValue<Guid>("systemuserid"),
-                    Role = e.GetAttributeValue<Guid>("roleid")}).ToList();
-            
-            var qEteamroles = new QueryExpression("teamroles");
-            qEteamroles.ColumnSet.AddColumns("roleid", "teamid");
-            list.AddRange(Service.RetrieveAll(qEteamroles).Entities
-                .Select(e => new ActorInRole
-                {
-                    Actor = e.GetAttributeValue<Guid>("teamid"),
-                    Role = e.GetAttributeValue<Guid>("roleid")
-                }));
-
-            return list;
-        }
-
-        private List<Model.SecurityRole> GetRoles()
-        {
-            var qErole = new QueryExpression("role");
-            qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid", "parentrootroleid");
-
-            return Service.RetrieveAll(qErole).Entities
-                .GroupBy(e => e.GetAttributeValue<string>("parentrootroleid"))
-                .Select(role => new Model.SecurityRole {
-                        Role = role.First(x => !x.Contains("parentroleid"))
-                            .GetAttributeValue<string>("name"),
-                        Id = role.First(x => !x.Contains("parentroleid"))
-                            .Id,
-                        Ids = role.ToDictionary(l => l.GetAttributeValue<Entity>("businessunitid").Id,
-                            l => l.Id)
-                }).ToList();
-        }
-
-        private List<Actor> GetActors()
-        {
-            var qEsystemuser = new QueryExpression("systemuser");
-            qEsystemuser.ColumnSet.AddColumns("systemuserid", "businessunitid", "fullname", "isdisabled");
-           
-
-            var list = Service.RetrieveAll(qEsystemuser).Entities.Select(e => new Actor()
-            {
-                Name = e.GetAttributeValue<string>("fullname"),
-                IsDisabled = e.GetAttributeValue<bool>("isdisabled"),
-                BusinessUnitName = e.GetAttributeValue<EntityReference>("businessunitid").Name,
-                BusinessUnit = e.GetAttributeValue<EntityReference>("businessunitid").Id,
-                Id = e.Id,
-                Type = ActorType.User
-            }).ToList();
-
-            var qEteam = new QueryExpression("team");
-            qEteam.ColumnSet.AddColumns("name", "businessunitid");
-            qEteam.Criteria.AddCondition("teamtype", ConditionOperator.Equal, 0);
-            list.AddRange(Service.RetrieveAll(qEteam).Entities.Select(e => new Actor
-            {
-                Name = e.GetAttributeValue<string>("name"),
-                IsDisabled = false,
-                BusinessUnitName = e.GetAttributeValue<EntityReference>("businessunitid").Name,
-                BusinessUnit = e.GetAttributeValue<EntityReference>("businessunitid").Id,
-                Id = e.Id,
-                Type = ActorType.Team
-            }));
-
-            return list;
-        }
+        
 
         private void toolStripButtonClosePlugin_Click(object sender, EventArgs e)
         {
@@ -118,13 +51,13 @@ namespace Daggen.SecurityRole
                 Work = (w, e) =>
                     {
                         w.ReportProgress(0, "Loading Actors");
-                        actors = GetActors();
+                        actors = reportService.GetActors();
 
                         w.ReportProgress(25, "Loading Security Roles");
-                        roles = GetRoles();
+                        roles = reportService.GetRoles();
 
                         w.ReportProgress(50, "Loading Actor Security Role Mapping");
-                        foreach (var actorInSecurityRole in GetActorsInSecurityRoles())
+                        foreach (var actorInSecurityRole in reportService.GetActorsInSecurityRoles())
                         {
                             var actor = actors.First(a => a.Id.Equals(actorInSecurityRole.Actor));
                             var role = roles.First(r => r.Ids.Values.Contains(actorInSecurityRole.Role));

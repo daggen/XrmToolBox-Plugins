@@ -27,8 +27,7 @@ namespace Daggen.SecurityRole
 
         public static Entity GetRelatedTo(this IOrganizationService service, Entity from, string attributeName, ColumnSet columnSet)
         {
-            var reference = from[attributeName] as EntityReference;
-            if (reference == null)
+            if (!(from[attributeName] is EntityReference reference))
             {
                 throw new ArgumentException("attributeName must be of type Lookup");
             }
@@ -38,10 +37,9 @@ namespace Daggen.SecurityRole
 
         public static T GetAttributeOrDefualt<T>(this Entity entity, string attributeName, T defaultValue)
         {
-            object value;
-            if (entity.Attributes.TryGetValue(attributeName, out value))
+            if (entity.Attributes.TryGetValue(attributeName, out object value))
             {
-                return (T) value;
+                return (T)value;
             }
             else
             {

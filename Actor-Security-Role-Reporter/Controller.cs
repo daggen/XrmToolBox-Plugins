@@ -50,22 +50,29 @@ namespace Daggen.SecurityRole
                 Message = "Loading",
                 Work = (w, e) =>
                     {
-                        w.ReportProgress(0, "Loading Actors");
-                        actors = reportService.GetActors();
-
-                        w.ReportProgress(25, "Loading Security Roles");
-                        roles = reportService.GetRoles();
-
-                        w.ReportProgress(50, "Loading Actor Security Role Mapping");
-                        foreach (var actorInSecurityRole in reportService.GetActorsInSecurityRoles())
+                        try
                         {
-                            var actor = actors.First(a => a.Id.Equals(actorInSecurityRole.Actor));
-                            var role = roles.First(r => r.Ids.Values.Contains(actorInSecurityRole.Role));
-                            actor.SecurityRoles.Add(role);
-                            role.Actors.Add(actor);
-                        }
+                            w.ReportProgress(0, "Loading Actors");
+                            actors = reportService.GetActors();
 
-                        w.ReportProgress(75, "Finishing");
+                            w.ReportProgress(25, "Loading Security Roles");
+                            roles = reportService.GetRoles();
+
+                            w.ReportProgress(50, "Loading Actor Security Role Mapping");
+                            foreach (var actorInSecurityRole in reportService.GetActorsInSecurityRoles())
+                            {
+                                var actor = actors.First(a => a.Id.Equals(actorInSecurityRole.Actor));
+                                var role = roles.First(r => r.Ids.Values.Contains(actorInSecurityRole.Role));
+                                actor.SecurityRoles.Add(role);
+                                role.Actors.Add(actor);
+                            }
+
+                            w.ReportProgress(75, "Finishing");
+                        } catch(Exception exc)
+                        {
+                            ShowErrorNotification("Could not load data", new Uri(""));
+                            LogError(exc.Message + exc.InnerException);
+                        }
                     },
                 PostWorkCallBack = e =>
                     {

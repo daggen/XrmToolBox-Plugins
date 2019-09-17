@@ -8,7 +8,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Daggen.SecurityRole</RootNamespace>
-    <AssemblyName>UserTeamSecurityRoleReporter</AssemblyName>
+    <AssemblyName>Daggen.UserTeamSecurityRoleReporter</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -175,6 +175,7 @@
     </None>
     <None Include="Resources\ActorSecurityRoleReport.xlsx" />
     <None Include="Resources\WriteLines2.csv" />
+    <None Include="User Team SecurityRole Reporter.nuspec" />
   </ItemGroup>
   <ItemGroup>
     <COMReference Include="Microsoft.Office.Core">

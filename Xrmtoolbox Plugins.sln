@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User Team SecurityRole Reporter", "Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj", "{8545557F-40F4-4430-9E73-DAEFCB178934}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{9AF7D955-47BB-4664-B046-3070A9D5F03F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScript Refactor", "JavaScript Refactor\JavaScript Refactor.csproj", "{29CE8D7E-EF6D-4568-8D29-CCA3DA5F88A9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavaScript Refactor Runner", "JavaScript Refactor Runner\JavaScript Refactor Runner.csproj", "{560A2A8E-963E-4397-8C5E-089CC0893F1F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserTeamSecurityRoleTester", "UserTeamSecurityRoleTester\UserTeamSecurityRoleTester.csproj", "{8589F0FB-5E0C-4D0F-BB6B-6B4E9FF8A19E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User Team SecurityRole Reporter", "User Team Security Role Reporter\Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj", "{8545557F-40F4-4430-9E73-DAEFCB178934}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{8545557F-40F4-4430-9E73-DAEFCB178934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8545557F-40F4-4430-9E73-DAEFCB178934}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9AF7D955-47BB-4664-B046-3070A9D5F03F}.Debug|Any CPU.ActiveCfg = Release|Any CPU
 		{9AF7D955-47BB-4664-B046-3070A9D5F03F}.Debug|Any CPU.Build.0 = Release|Any CPU
 		{9AF7D955-47BB-4664-B046-3070A9D5F03F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AF7D955-47BB-4664-B046-3070A9D5F03F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29CE8D7E-EF6D-4568-8D29-CCA3DA5F88A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29CE8D7E-EF6D-4568-8D29-CCA3DA5F88A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29CE8D7E-EF6D-4568-8D29-CCA3DA5F88A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29CE8D7E-EF6D-4568-8D29-CCA3DA5F88A9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{560A2A8E-963E-4397-8C5E-089CC0893F1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{560A2A8E-963E-4397-8C5E-089CC0893F1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{560A2A8E-963E-4397-8C5E-089CC0893F1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{560A2A8E-963E-4397-8C5E-089CC0893F1F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8589F0FB-5E0C-4D0F-BB6B-6B4E9FF8A19E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8589F0FB-5E0C-4D0F-BB6B-6B4E9FF8A19E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8589F0FB-5E0C-4D0F-BB6B-6B4E9FF8A19E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8589F0FB-5E0C-4D0F-BB6B-6B4E9FF8A19E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8545557F-40F4-4430-9E73-DAEFCB178934}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8545557F-40F4-4430-9E73-DAEFCB178934}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

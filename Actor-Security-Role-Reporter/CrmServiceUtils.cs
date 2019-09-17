@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -6,7 +7,7 @@ namespace Daggen.SecurityRole
 {
     public static class CrmServiceUtils
     {
-        public static EntityCollection RetrieveAll(this IOrganizationService service, QueryExpression query)
+        public static IEnumerable<Entity> RetrieveAll(this IOrganizationService service, QueryExpression query)
         {
             query.PageInfo = new PagingInfo();
             var pageNumber = 1;
@@ -19,10 +20,12 @@ namespace Daggen.SecurityRole
 
                 query.PageInfo.PageNumber = pageNumber++;
                 results = service.RetrieveMultiple(query);
-                finalCollection.Entities.AddRange(results.Entities);
+                foreach (var rec in results.Entities)
+                {
+                    yield return rec;
+                }
             } while (results.MoreRecords);
-
-            return finalCollection;
+            
         }
 
         public static Entity GetRelatedTo(this IOrganizationService service, Entity from, string attributeName, ColumnSet columnSet)

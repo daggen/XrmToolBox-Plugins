@@ -17,18 +17,30 @@ namespace Daggen.SecurityRole
             var service = ServiceFunc.Invoke();
 
             var qErole = new QueryExpression("role");
-            qErole.ColumnSet.AddColumns("name", "parentroleid", "businessunitid", "parentrootroleid");
+            qErole.ColumnSet.AddColumns("name", "businessunitid", "parentrootroleid");
+            qErole.AddOrder("parentrootroleid", OrderType.Ascending);
 
-            return service.RetrieveAll(qErole).Entities
-                .GroupBy(e => e.GetAttributeValue<EntityReference>("parentrootroleid").Id)
-                .Select(rolesWithSameParent => new Model.SecurityRole
-                {
-                    Role = rolesWithSameParent.First(x => !x.Contains("parentroleid"))
-                        .GetAttributeValue<string>("name"),
-                    Id = rolesWithSameParent.First(x => !x.Contains("parentroleid"))
-                        .Id,
-                    Ids = rolesWithSameParent.ToDictionary(l => l.GetAttributeValue<EntityReference>("businessunitid").Id,
-                        l => l.Id)
+            return service.RetrieveAll(qErole)
+                .Select(e => {
+                    return new
+                    {
+                        rootid = e.GetAttributeValue<EntityReference>("parentrootroleid").Id,
+                        name = e.GetAttributeValue<string>("name"),
+                        businessUnitId = e.GetAttributeValue<EntityReference>("businessunitid").Id,
+                        securityRoleId = e.Id
+                    };
+                })
+                .GroupBy(r => {
+                    return r.rootid;
+                })
+                .Select(rolesWithSameParent => {
+                    return new Model.SecurityRole
+                    {
+                        Role = rolesWithSameParent.First().name,
+                        Id = rolesWithSameParent.Key,
+                        Ids = rolesWithSameParent.ToDictionary(l => l.businessUnitId,
+                            l => l.securityRoleId)
+                    };
                 }).ToList();
         }
 
@@ -38,7 +50,7 @@ namespace Daggen.SecurityRole
             qEsystemuser.ColumnSet.AddColumns("systemuserid", "businessunitid", "fullname", "isdisabled");
             var service = ServiceFunc.Invoke();
 
-            var list = service.RetrieveAll(qEsystemuser).Entities.Select(e => new Actor()
+            var list = service.RetrieveAll(qEsystemuser).Select(e => new Actor()
             {
                 Name = e.GetAttributeValue<string>("fullname"),
                 IsDisabled = e.GetAttributeValue<bool>("isdisabled"),
@@ -51,7 +63,7 @@ namespace Daggen.SecurityRole
             var qEteam = new QueryExpression("team");
             qEteam.ColumnSet.AddColumns("name", "businessunitid");
             qEteam.Criteria.AddCondition("teamtype", ConditionOperator.Equal, 0);
-            list.AddRange(service.RetrieveAll(qEteam).Entities.Select(e => new Actor
+            list.AddRange(service.RetrieveAll(qEteam).Select(e => new Actor
             {
                 Name = e.GetAttributeValue<string>("name"),
                 IsDisabled = false,
@@ -70,7 +82,7 @@ namespace Daggen.SecurityRole
 
             var qEsystemuserroles = new QueryExpression("systemuserroles");
             qEsystemuserroles.ColumnSet.AddColumns("roleid", "systemuserid");
-            var list = service.RetrieveAll(qEsystemuserroles).Entities
+            var list = service.RetrieveAll(qEsystemuserroles)
                 .Select(e => new ActorInRole
                 {
                     Actor = e.GetAttributeValue<Guid>("systemuserid"),
@@ -79,7 +91,7 @@ namespace Daggen.SecurityRole
 
             var qEteamroles = new QueryExpression("teamroles");
             qEteamroles.ColumnSet.AddColumns("roleid", "teamid");
-            list.AddRange(service.RetrieveAll(qEteamroles).Entities
+            list.AddRange(service.RetrieveAll(qEteamroles)
                 .Select(e => new ActorInRole
                 {
                     Actor = e.GetAttributeValue<Guid>("teamid"),

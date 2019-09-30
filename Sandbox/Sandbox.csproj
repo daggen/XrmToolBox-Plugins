@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Sandbox</RootNamespace>
     <AssemblyName>Sandbox</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -132,7 +132,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj">
+    <ProjectReference Include="..\User Team Security Role Reporter\Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj">
       <Project>{8545557F-40F4-4430-9E73-DAEFCB178934}</Project>
       <Name>User Team SecurityRole Reporter</Name>
     </ProjectReference>

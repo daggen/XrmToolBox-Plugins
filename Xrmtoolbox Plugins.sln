@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.136
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29306.81
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.csproj", "{9AF7D955-47BB-4664-B046-3070A9D5F03F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User Team SecurityRole Reporter", "User Team Security Role Reporter\Actor-Security-Role-Reporter\User Team SecurityRole Reporter.csproj", "{8545557F-40F4-4430-9E73-DAEFCB178934}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecordToCode", "RecordToCode\RecordToCode\RecordToCode.csproj", "{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{8545557F-40F4-4430-9E73-DAEFCB178934}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8545557F-40F4-4430-9E73-DAEFCB178934}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

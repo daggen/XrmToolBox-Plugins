@@ -13,7 +13,7 @@ using Microsoft.Xrm.Sdk.Query;
 using Microsoft.Xrm.Sdk;
 using McTools.Xrm.Connection;
 
-namespace RecordToCode
+namespace Daggen.RecordToCode
 {
     public partial class MyPluginControl : PluginControlBase
     {
@@ -26,8 +26,6 @@ namespace RecordToCode
 
         private void MyPluginControl_Load(object sender, EventArgs e)
         {
-            ShowInfoNotification("This is a notification that can lead to XrmToolBox repository", new Uri("https://github.com/MscrmTools/XrmToolBox"));
-
             // Loads or creates the settings for the plugin
             if (!SettingsManager.Instance.TryLoad(GetType(), out mySettings))
             {
@@ -48,36 +46,15 @@ namespace RecordToCode
 
         private void tsbSample_Click(object sender, EventArgs e)
         {
-            // The ExecuteMethod method handles connecting to an
-            // organization if XrmToolBox is not yet connected
-            ExecuteMethod(GetAccounts);
-        }
+            var record =
+                Service.Retrieve(textBoxEntityType.Text,
+                    new Guid(textBoxGuid.Text),
+                    new ColumnSet(true));
 
-        private void GetAccounts()
-        {
-            WorkAsync(new WorkAsyncInfo
-            {
-                Message = "Getting accounts",
-                Work = (worker, args) =>
-                {
-                    args.Result = Service.RetrieveMultiple(new QueryExpression("account")
-                    {
-                        TopCount = 50
-                    });
-                },
-                PostWorkCallBack = (args) =>
-                {
-                    if (args.Error != null)
-                    {
-                        MessageBox.Show(args.Error.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                    var result = args.Result as EntityCollection;
-                    if (result != null)
-                    {
-                        MessageBox.Show($"Found {result.Entities.Count} accounts");
-                    }
-                }
-            });
+            textBoxCode.Text = $"var rec = new Entity(\"{record.LogicalName}\") {{" +
+                string.Join("," + Environment.NewLine, record.Attributes
+                .Select(ToString)
+                .OrderBy(t => t)) + "};";
         }
 
         /// <summary>
@@ -105,16 +82,6 @@ namespace RecordToCode
             }
         }
 
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            var record =
-                Service.Retrieve(textBoxEntityType.Text, 
-                    new Guid(textBoxGuid.Text), 
-                    new ColumnSet(true));
-
-             textBoxCode.Text = string.Join(",\n", record.Attributes
-                .Select(ToString));
-        }
         private string ToString(KeyValuePair<string, object> attr)
         {
             var key = attr.Key;
@@ -129,19 +96,19 @@ namespace RecordToCode
             switch (value)
             {
                 case EntityReference e:
-                    return $"new EntityReference(\"{e.LogicalName}\", new Guid(\"{e.Id}\")";
+                    return $"new EntityReference(\"{e.LogicalName}\", new Guid(\"{e.Id}\"))";
                 case OptionSetValue o:
                     return $"new OptionSetValue({o.Value})";
                 case DateTime d:
                     return $"new DateTime({d.Year}, {d.Month}, {d.Day}, {d.Hour}, {d.Minute}, {d.Second})";
                 case Money m:
-                    return $"new Money({m.Value})";
+                    return $"new Money({m.Value.ToString(ngi)}M)";
                 case Guid d:
                     return $"new Guid(\"{d.ToString()}\")";
                 case bool b:
                     return b ? "true" : "false";
                 case decimal d:
-                    return d.ToString(ngi);
+                    return d.ToString(ngi)+"M";
                 case double d:
                     return d.ToString(ngi);
                 case float f:

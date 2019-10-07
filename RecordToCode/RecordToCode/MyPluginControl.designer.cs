@@ -1,4 +1,4 @@
-﻿namespace RecordToCode
+﻿namespace Daggen.RecordToCode
 {
     partial class MyPluginControl
     {
@@ -36,7 +36,6 @@
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.textBoxEntityType = new System.Windows.Forms.TextBox();
             this.textBoxGuid = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.textBoxCode = new System.Windows.Forms.TextBox();
             this.toolStripMenu.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -73,8 +72,8 @@
             // 
             this.tsbSample.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.tsbSample.Name = "tsbSample";
-            this.tsbSample.Size = new System.Drawing.Size(47, 22);
-            this.tsbSample.Text = "Try me";
+            this.tsbSample.Size = new System.Drawing.Size(58, 22);
+            this.tsbSample.Text = "Generate";
             this.tsbSample.Click += new System.EventHandler(this.tsbSample_Click);
             // 
             // tableLayoutPanel1
@@ -100,13 +99,12 @@
             this.tableLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tableLayoutPanel2.ColumnCount = 3;
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
-            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333F));
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel2.Controls.Add(this.textBoxEntityType, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.textBoxGuid, 1, 0);
-            this.tableLayoutPanel2.Controls.Add(this.button1, 2, 0);
             this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
@@ -121,7 +119,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxEntityType.Location = new System.Drawing.Point(3, 3);
             this.textBoxEntityType.Name = "textBoxEntityType";
-            this.textBoxEntityType.Size = new System.Drawing.Size(236, 20);
+            this.textBoxEntityType.Size = new System.Drawing.Size(358, 20);
             this.textBoxEntityType.TabIndex = 0;
             this.textBoxEntityType.Text = "Entity Type";
             // 
@@ -130,21 +128,11 @@
             this.textBoxGuid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBoxGuid.Location = new System.Drawing.Point(245, 3);
+            this.textBoxGuid.Location = new System.Drawing.Point(367, 3);
             this.textBoxGuid.Name = "textBoxGuid";
-            this.textBoxGuid.Size = new System.Drawing.Size(236, 20);
+            this.textBoxGuid.Size = new System.Drawing.Size(359, 20);
             this.textBoxGuid.TabIndex = 1;
             this.textBoxGuid.Text = "Guid";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(487, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "Generate";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.Button1_Click);
             // 
             // textBoxCode
             // 
@@ -152,9 +140,10 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBoxCode.Location = new System.Drawing.Point(3, 43);
+            this.textBoxCode.Multiline = true;
             this.textBoxCode.Name = "textBoxCode";
             this.textBoxCode.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBoxCode.Size = new System.Drawing.Size(729, 20);
+            this.textBoxCode.Size = new System.Drawing.Size(729, 412);
             this.textBoxCode.TabIndex = 1;
             this.textBoxCode.UseWaitCursor = true;
             // 
@@ -187,7 +176,6 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TextBox textBoxEntityType;
         private System.Windows.Forms.TextBox textBoxGuid;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.TextBox textBoxCode;
     }
 }

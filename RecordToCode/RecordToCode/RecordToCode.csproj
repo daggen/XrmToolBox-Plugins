@@ -8,8 +8,8 @@
     <ProjectGuid>{D7BF0C97-53BD-4F2A-A7BD-548049447DEB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>RecordToCode</RootNamespace>
-    <AssemblyName>RecordToCode</AssemblyName>
+    <RootNamespace>Daggen.RecordToCode</RootNamespace>
+    <AssemblyName>Daggen.RecordToCode</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -1,3 +1,6 @@
+# Deprecated
+I'm no longer active professional in the Dynamics community. Hence I will not be actively working and maintaining this anymore.
+
 # Plugin: User, Team and Security Role Report
 View User's and Team's Security Roles and how they related to each other. Also possible to bulk update!
 
